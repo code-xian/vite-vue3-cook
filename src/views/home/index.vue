@@ -102,7 +102,9 @@
           // console.log(2)
         },
         onProgress: function (swiper,progress) {
-          console.log(swiper);
+          // console.log(document.body.clientWidth,1);
+          // console.log(document.documentElement.clientWidth,2);
+          // console.log(window.screen.width,3);
           //遍历所有slides轮播图
           for (let i = 0; i < swiper.slides.length; i++) {
             //获取到轮播
@@ -118,12 +120,24 @@
             slide.transform('translateX(' + translate + ') scale(' + scale + ')');
             slide.css('zIndex', zIndex);
             slide.css('opacity', 1);
-            if (Math.abs(slideProgress) > 0) {
-              slide.css('opacity', 0.7);
-            }
-            if (Math.abs(slideProgress) > 1) {
-              slide.css('opacity', 0);
-            }
+            // if (Math.abs(slideProgress) > 2) {
+            //   slide.css('opacity', 0);
+            // }
+            // if (document.body.clientWidth % 4 === 0) {
+            //   if (Math.abs(slideProgress) > 0) {
+            //     slide.css('opacity', 0.7);
+            //   }
+            //   if (Math.abs(slideProgress) > 1.5) {
+            //     slide.css('opacity', 0);
+            //   }
+            // }else if (document.body.clientWidth % 3 === 0){
+              if (Math.abs(slideProgress) > 0.1) {
+                slide.css('opacity', 0.7);
+              }
+              if (Math.abs(slideProgress) > 1.5) {
+                slide.css('opacity', 0);
+              }
+            // }
           }},
         onSetTransition: function (swiper,transition) {
           for (var i = 0; i < swiper.slides.length; i++) {
