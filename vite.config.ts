@@ -5,6 +5,7 @@ module.exports = {
     // 键必须以斜线开始和结束
     '/@/': path.resolve(__dirname, './src')
   },
+  // 引入第三方的配置
   optimizeDeps: {
     include: ['lodash', 'moment', 'echarts', 'axios', 'mockjs', 'swiper/vue']
   },
