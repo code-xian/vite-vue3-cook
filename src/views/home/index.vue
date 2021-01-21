@@ -13,7 +13,6 @@
     :pagination="swiperOptions.pagination"
     :loop-additional-slides="5"
     :fadeEffect="swiperOptions.fadeEffect"
-    :autoplay="swiperOptions.autoplay"
     @swiper="onSwiper"
     @slideChange="onSlideChange"
     @progress="onProgress"
@@ -103,6 +102,7 @@
           // console.log(2)
         },
         onProgress: function (swiper,progress) {
+          console.log(swiper);
           //遍历所有slides轮播图
           for (let i = 0; i < swiper.slides.length; i++) {
             //获取到轮播
@@ -118,7 +118,10 @@
             slide.transform('translateX(' + translate + ') scale(' + scale + ')');
             slide.css('zIndex', zIndex);
             slide.css('opacity', 1);
-            if (Math.abs(slideProgress) > 2) {
+            if (Math.abs(slideProgress) > 0) {
+              slide.css('opacity', 0.7);
+            }
+            if (Math.abs(slideProgress) > 1) {
               slide.css('opacity', 0);
             }
           }},
@@ -141,7 +144,9 @@
 <style scoped lang="scss">
   //@import 'swiper.css';
   .main-img {
+    object-fit: cover;
     width: 80%;
     height: 400px;
+    border-radius: 10px;
   }
 </style>
