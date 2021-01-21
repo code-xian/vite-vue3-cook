@@ -4,12 +4,16 @@
     :space-between="50"
     Autoplay
     Pagination
+    navigation
+    EffectFade
     :loop="swiperOptions.loop"
     :slidesPerView="swiperOptions.slidesPerView"
     :centered-slides="swiperOptions.centeredSlides"
     :watch-slides-progress="swiperOptions.watchSlidesProgress"
     :pagination="swiperOptions.pagination"
     :loop-additional-slides="5"
+    :fadeEffect="swiperOptions.fadeEffect"
+    :autoplay="swiperOptions.autoplay"
     @swiper="onSwiper"
     @slideChange="onSlideChange"
     @progress="onProgress"
@@ -24,11 +28,12 @@
     <swiper-slide
       ><img src="/@/assets/images/swiper/food3.jpg" alt="" class="main-img"
     /></swiper-slide>
+    <div class="swiper-pagination"></div>
   </swiper>
 </template>
 
 <script lang="ts">
-  import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper'
+  import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Autoplay ,EffectFade} from 'swiper'
   import { defineComponent, reactive, toRefs } from 'vue'
   import { Swiper, SwiperSlide } from 'swiper/vue'
   import 'swiper/swiper-bundle.css'
@@ -42,7 +47,7 @@
   // import 'swiper/components/scrollbar/scrollbar.scss'
   // import 'swiper/swiper-bundle.min.css'
   // install Swiper components
-  SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay])
+  SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay,EffectFade])
   export default defineComponent({
     name: 'Home',
     components: {
@@ -82,9 +87,12 @@
           },
           autoplay: {
             delay: 1000,
-            stopOnLastSlide: false,
+            stopOnLastSlide: true,
             disableOnInteraction: true
-          }
+          },
+          fadeEffect: {
+            crossFade: true
+          },
         }
       })
       const methods = reactive({
@@ -94,13 +102,31 @@
         onSlideChange() {
           // console.log(2)
         },
-        onProgress: function (a) {
-          // var b, c, d;
-          // for (b = 0; b < a.slides.length; b++) c = a.slides[b], d = c.progress, scale = 1 - Math.min(Math.abs(.2 * d), 1), es = c.style, es.opacity = 1 - Math.min(Math.abs(d / 2), 1), es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = "translate3d(0px,0," + -Math.abs(150 * d) + "px)"
-        },
-        onSetTransition: function (a, b) {
-          // for (var c = 0; c < a.slides.length; c++) es = a.slides[c].style, es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = b + "ms"
-        }
+        onProgress: function (swiper,progress) {
+          //遍历所有slides轮播图
+          for (let i = 0; i < swiper.slides.length; i++) {
+            //获取到轮播
+            var slide = swiper.slides.eq(i);
+            var slideProgress = swiper.slides[i].progress;
+            let modify = 1;
+            if (Math.abs(slideProgress) > 1) {
+              modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+            }
+            let translate = slideProgress * modify * 260 + 'px';
+            let scale = 1 - Math.abs(slideProgress) / 5;
+            let zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+            slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+            slide.css('zIndex', zIndex);
+            slide.css('opacity', 1);
+            if (Math.abs(slideProgress) > 2) {
+              slide.css('opacity', 0);
+            }
+          }},
+        onSetTransition: function (swiper,transition) {
+          for (var i = 0; i < swiper.slides.length; i++) {
+            var slide = swiper.slides.eq(i)
+            slide.transition(transition);
+          }}
       })
       const refData = toRefs(data)
       const refMethods = toRefs(methods)
@@ -115,5 +141,7 @@
 <style scoped lang="scss">
   //@import 'swiper.css';
   .main-img {
+    width: 80%;
+    height: 400px;
   }
 </style>
