@@ -1,68 +1,77 @@
 <template>
-  <swiper
-    :slides-per-view="3"
-    :space-between="50"
-    Autoplay
-    Pagination
-    navigation
-    EffectFade
-    :loop="swiperOptions.loop"
-    :slidesPerView="swiperOptions.slidesPerView"
-    :centered-slides="swiperOptions.centeredSlides"
-    :watch-slides-progress="swiperOptions.watchSlidesProgress"
-    :pagination="swiperOptions.pagination"
-    :loop-additional-slides="5"
-    :fadeEffect="swiperOptions.fadeEffect"
-    @swiper="onSwiper"
-    @slideChange="onSlideChange"
-    @progress="onProgress"
-    @setTransition="onSetTransition"
-  >
-    <swiper-slide v-for="item in swiperImgList" :key="item.id">
-      <router-link :to="{ name: item.route }">
-        <div
-          class="main-img"
-          :style="{
-            background:
-              'linear-gradient(359.69deg, rgba(0, 0, 0, 0.5) 0.28%, rgba(255, 255, 255, 0) 56.07%), linear-gradient(213.76deg, rgba(33, 43, 54, 0.5) 1.48%, rgba(255, 255, 255, 0) 20.93%), url(' +
-              item.img +
-              '), #FFFFFF'
-          }"
-        ><div class="main-info">chicken and vegetable</div></div>
-      </router-link>
-    </swiper-slide>
-    <div class="swiper-pagination"></div>
-  </swiper>
-  <div class="title">Popular recipes</div>
-  <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
+  <div class="norem-container">
+    <swiper
+      :slides-per-view="3"
+      :space-between="50"
+      Autoplay
+      Pagination
+      navigation
+      EffectFade
+      :loop="swiperOptions.loop"
+      :slidesPerView="swiperOptions.slidesPerView"
+      :centered-slides="swiperOptions.centeredSlides"
+      :watch-slides-progress="swiperOptions.watchSlidesProgress"
+      :pagination="swiperOptions.pagination"
+      :loop-additional-slides="5"
+      :fadeEffect="swiperOptions.fadeEffect"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+      @progress="onProgress"
+      @setTransition="onSetTransition"
     >
-      <!--    <van-cell v-for="item in list" :key="item" :title="item" />-->
-      <div class="flex">
-        <div
-          v-for="(item, index) in gourmetImgLists"
-          :key="index"
-          class="flex-item"
-          :style="{
-            background:
-              'linear-gradient(180.2deg, rgba(255, 255, 255, 0) 50%, #000000 99.82%), url(' +
-              item.img +
-              '), #FEA6A0',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            borderRadius: '8px'
-          }"
-        >
-          <div class="gourmetTitle">{{ item.title }}</div>
-          <!--          <img :src="item && item.img" alt="" class="list-img" />-->
+      <swiper-slide v-for="item in swiperImgList" :key="item.id">
+        <router-link :to="{ name: item.route }">
+          <div
+            class="main-img"
+            :style="{
+              background:
+                'linear-gradient(359.69deg, rgba(0, 0, 0, 0.5) 0.28%, rgba(255, 255, 255, 0) 56.07%), linear-gradient(213.76deg, rgba(33, 43, 54, 0.5) 1.48%, rgba(255, 255, 255, 0) 20.93%), url(' +
+                item.img +
+                '), #FFFFFF'
+            }"
+          >
+            <div class="main-title">{{ item.title }}</div>
+            <div class="main-info">{{ item.info }}</div>
+            <div class="main-avatar">
+              <van-image width="32px" height="32px" fit="cover" round :src="item.avatar" />
+            </div>
+            <div class="main-name">{{ item.name }}</div>
+          </div>
+        </router-link>
+      </swiper-slide>
+      <div class="swiper-pagination"></div>
+    </swiper>
+    <div class="title">Popular recipes</div>
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-list
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <!--    <van-cell v-for="item in list" :key="item" :title="item" />-->
+        <div class="flex">
+          <div
+            v-for="(item, index) in gourmetImgLists"
+            :key="index"
+            class="flex-item"
+            :style="{
+              background:
+                'linear-gradient(180.2deg, rgba(255, 255, 255, 0) 50%, #000000 99.82%), url(' +
+                item.img +
+                '), #FEA6A0',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px'
+            }"
+          >
+            <div class="gourmetTitle">{{ item.title }}</div>
+            <!--          <img :src="item && item.img" alt="" class="list-img" />-->
+          </div>
         </div>
-      </div>
-    </van-list>
-  </van-pull-refresh>
+      </van-list>
+    </van-pull-refresh>
+  </div>
 </template>
 
 <script lang="ts">
@@ -234,6 +243,7 @@
     outline: none;
   }
   .flex {
+    margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -241,10 +251,15 @@
       margin-bottom: 10px;
       height: 230px;
       flex-basis: 45%;
+      transition: all 0.1s;
+    }
+    .flex-item:active {
+      transform: scale(1.05);
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.5);
     }
   }
   .title {
-    margin: 20px 10px;
+    margin: 30px 10px 0;
     text-align: left;
     color: #ee5331;
     font-weight: 700;
@@ -255,18 +270,41 @@
     height: 100%;
     box-shadow: 0px 3px 6px rgba(110, 116, 134, 0.24);
     border-radius: 8px;
-    background: linear-gradient(180.2deg, rgba(255, 255, 255, 0) 50%, #000000 99.82%) #fea6a0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #000000 99.82%) #fea6a0;
   }
   .gourmetTitle {
     transform: translateY(200px);
     color: #fff;
     font-weight: 700;
   }
-  .main-info {
+  .main-title {
     position: absolute;
-    bottom: 20%;
-    left: 20%;
+    bottom: 22%;
+    left: 15%;
     color: #ffffff;
     font-size: 20px;
+    font-weight: 700;
+  }
+  .main-info {
+    position: absolute;
+    bottom: 17%;
+    left: 15%;
+    color: #ffffff;
+    font-size: 18px;
+  }
+  .main-avatar {
+    position: absolute;
+    bottom: 6%;
+    left: 15%;
+  }
+  .main-name {
+    position: absolute;
+    bottom: 8%;
+    left: 25%;
+    color: #ffffff;
+    font-size: 16px;
+  }
+  .norem-container{
+    background: linear-gradient( #fea6a0 100px, rgba(255, 255, 255, .5));
   }
 </style>
