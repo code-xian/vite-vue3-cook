@@ -18,34 +18,55 @@
     @progress="onProgress"
     @setTransition="onSetTransition"
   >
-    <!--    <swiper-slide-->
-    <!--      ><img src="/@/assets/images/swiper/food1.jpg" alt="" class="main-img"-->
-    <!--    /></swiper-slide>-->
-    <!--    <swiper-slide-->
-    <!--      ><img src="/@/assets/images/swiper/food2.jpg" alt="" class="main-img"-->
-    <!--    /></swiper-slide>-->
-    <!--    <swiper-slide-->
-    <!--      ><img src="/@/assets/images/swiper/food3.jpg" alt="" class="main-img"-->
-    <!--    /></swiper-slide>-->
-    <swiper-slide v-for="item in imgList" :key="item.id">
-      <router-link :to="{name:item.route}">
-        <img :src="item.img" class="main-img" />
+    <swiper-slide v-for="item in swiperImgList" :key="item.id">
+      <router-link :to="{ name: item.route }">
+        <div
+          class="main-img"
+          :style="{
+            background:
+              'linear-gradient(359.69deg, rgba(0, 0, 0, 0.5) 0.28%, rgba(255, 255, 255, 0) 56.07%), linear-gradient(213.76deg, rgba(33, 43, 54, 0.5) 1.48%, rgba(255, 255, 255, 0) 20.93%), url(' +
+              item.img +
+              '), #FFFFFF'
+          }"
+        ><div class="main-info">chicken and vegetable</div></div>
       </router-link>
     </swiper-slide>
     <div class="swiper-pagination"></div>
   </swiper>
-  <van-list
-          v-model:loading="loading"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="onLoad"
-  >
-    <van-cell v-for="item in list" :key="item" :title="item" />
-  </van-list>
+  <div class="title">Popular recipes</div>
+  <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <!--    <van-cell v-for="item in list" :key="item" :title="item" />-->
+      <div class="flex">
+        <div
+          v-for="(item, index) in gourmetImgLists"
+          :key="index"
+          class="flex-item"
+          :style="{
+            background:
+              'linear-gradient(180.2deg, rgba(255, 255, 255, 0) 50%, #000000 99.82%), url(' +
+              item.img +
+              '), #FEA6A0',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            borderRadius: '8px'
+          }"
+        >
+          <div class="gourmetTitle">{{ item.title }}</div>
+          <!--          <img :src="item && item.img" alt="" class="list-img" />-->
+        </div>
+      </div>
+    </van-list>
+  </van-pull-refresh>
 </template>
 
 <script lang="ts">
-  import { imgList } from './data'
+  import { swiperImgList, gourmetImgList } from './data'
   import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade } from 'swiper'
   import { defineComponent, reactive, toRefs } from 'vue'
   import { Swiper, SwiperSlide } from 'swiper/vue'
@@ -53,13 +74,11 @@
   import 'swiper/swiper.scss'
 
   import 'swiper/components/pagination/pagination.scss'
-  // Import Swiper styles
   // import 'swiper/swiper.scss'
   // import 'swiper/components/navigation/navigation.scss'
   // import 'swiper/components/pagination/pagination.scss'
   // import 'swiper/components/scrollbar/scrollbar.scss'
   // import 'swiper/swiper-bundle.min.css'
-  // install Swiper components
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade])
   export default defineComponent({
     name: 'Home',
@@ -68,36 +87,21 @@
       SwiperSlide
     },
     setup(content) {
-      console.log(content)
-    interface s{
-      list: any;
-      loading: boolean;
-      finished: boolean;
-    }
-      const data:s = reactive({
-        imgList,
+      interface dataType {
+        list: any
+        loading: boolean
+        finished: boolean
+        refreshing: boolean
+        swiperOptions: any
+        gourmetImgLists: any
+      }
+      const data: dataType = reactive({
+        swiperImgList,
+        gourmetImgLists: [],
         list: [],
         loading: false,
+        refreshing: false,
         finished: false,
-        // swiperOptions: {
-        //   slidesPerView: 3,
-        //   grabCursor: true,
-        //   spaceBetween: 50,
-        //   centeredSlides: true,
-        //   autoplay: {
-        //     delay: 2500,
-        //     disableOnInteraction: false
-        //   },
-        //   loop: true,
-        //   pagination: {
-        //     el: '.swiper-pagination',
-        //     clickable: true
-        //   },
-        //   navigation: {
-        //     nextEl: '.swiper-button-next',
-        //     prevEl: '.swiper-button-prev'
-        //   }
-        // },
         swiperOptions: {
           loop: true,
           slidesPerView: 'auto',
@@ -118,22 +122,35 @@
         }
       })
       const methods = reactive({
-        onLoad(){
+        onLoad() {
           // 异步更新数据
           // setTimeout 仅做示例，真实场景中一般为 ajax 请求
           setTimeout(() => {
+            if (data.refreshing) {
+              data.gourmetImgLists = []
+              data.refreshing = false
+            }
             for (let i = 0; i < 10; i++) {
-              data.list.push(data.list.length + 1);
+              data.gourmetImgLists.push(gourmetImgList[data.gourmetImgLists.length])
             }
 
             // 加载状态结束
-            data.loading = false;
+            data.loading = false
 
             // 数据全部加载完成
-            if (data.list.length >= 40) {
-              data.finished = true;
+            if (data.gourmetImgLists.length >= gourmetImgList.length) {
+              data.finished = true
             }
-          }, 1000);
+          }, 1000)
+        },
+        onRefresh() {
+          // 清空列表数据
+          data.finished = false
+
+          // 重新加载数据
+          // 将 loading 设置为 true，表示处于加载状态
+          data.loading = true
+          methods.onLoad()
         },
         onSwiper: () => {
           // console.log(1)
@@ -160,6 +177,7 @@
             slide.transform('translateX(' + translate + ') scale(' + scale + ')')
             slide.css('zIndex', zIndex)
             slide.css('opacity', 1)
+            // slide.css('box-shadow', "0 0.3px 0.6px rgba(0, 0, 0, 0.056),0 0.7px 1.3px rgba(0, 0, 0, 0.081),0 1.3px 2.5px rgba(0, 0, 0, 0.1),0 2.2px 4.5px rgba(0, 0, 0, 0.119),0 4.2px 8.4px rgba(0, 0, 0, 0.144),0 10px 20px rgba(0, 0, 0, 0.2)")
             // if (Math.abs(slideProgress) > 2) {
             //   slide.css('opacity', 0);
             // }
@@ -202,10 +220,53 @@
   .main-img {
     object-fit: cover;
     width: 80%;
-    height: 400px;
+    height: 500px;
     border-radius: 10px;
+    box-shadow: 0px 12px 8px -12px #000;
+    margin: 0 auto 5px;
+    background-size: cover !important;
+    background-position: center !important;
   }
-  ::v-deep(.swiper-button-next):focus{
+  ::v-deep(.swiper-button-next):focus {
     outline: none;
+  }
+  ::v-deep(.swiper-pagination-bullet):focus {
+    outline: none;
+  }
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    .flex-item {
+      margin-bottom: 10px;
+      height: 230px;
+      flex-basis: 45%;
+    }
+  }
+  .title {
+    margin: 20px 10px;
+    text-align: left;
+    color: #ee5331;
+    font-weight: 700;
+  }
+  .list-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 3px 6px rgba(110, 116, 134, 0.24);
+    border-radius: 8px;
+    background: linear-gradient(180.2deg, rgba(255, 255, 255, 0) 50%, #000000 99.82%) #fea6a0;
+  }
+  .gourmetTitle {
+    transform: translateY(200px);
+    color: #fff;
+    font-weight: 700;
+  }
+  .main-info {
+    position: absolute;
+    bottom: 20%;
+    left: 20%;
+    color: #ffffff;
+    font-size: 20px;
   }
 </style>
