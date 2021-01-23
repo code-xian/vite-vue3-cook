@@ -1,48 +1,48 @@
 <template>
-  <div class="norem-container">
-    <swiper
-      :slides-per-view="3"
-      :space-between="50"
-      Autoplay
-      Pagination
-      navigation
-      EffectFade
-      :loop="swiperOptions.loop"
-      :slidesPerView="swiperOptions.slidesPerView"
-      :centered-slides="swiperOptions.centeredSlides"
-      :watch-slides-progress="swiperOptions.watchSlidesProgress"
-      :pagination="swiperOptions.pagination"
-      :loop-additional-slides="5"
-      :fadeEffect="swiperOptions.fadeEffect"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-      @progress="onProgress"
-      @setTransition="onSetTransition"
-    >
-      <swiper-slide v-for="item in swiperImgList" :key="item.id">
-        <router-link :to="{ name: item.route }">
-          <div
-            class="main-img"
-            :style="{
-              background:
-                'linear-gradient(359.69deg, rgba(0, 0, 0, 0.5) 0.28%, rgba(255, 255, 255, 0) 56.07%), linear-gradient(213.76deg, rgba(33, 43, 54, 0.5) 1.48%, rgba(255, 255, 255, 0) 20.93%), url(' +
-                item.img +
-                '), #FFFFFF'
-            }"
-          >
-            <div class="main-title">{{ item.title }}</div>
-            <div class="main-info">{{ item.info }}</div>
-            <div class="main-avatar">
-              <van-image width="32px" height="32px" fit="cover" round :src="item.avatar" />
-            </div>
-            <div class="main-name">{{ item.name }}</div>
-          </div>
-        </router-link>
-      </swiper-slide>
-      <div class="swiper-pagination"></div>
-    </swiper>
-    <div class="title">Popular recipes</div>
+  <div class="container">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <swiper
+        :slides-per-view="3"
+        :space-between="50"
+        Autoplay
+        Pagination
+        navigation
+        EffectFade
+        :loop="swiperOptions.loop"
+        :slidesPerView="swiperOptions.slidesPerView"
+        :centered-slides="swiperOptions.centeredSlides"
+        :watch-slides-progress="swiperOptions.watchSlidesProgress"
+        :pagination="swiperOptions.pagination"
+        :loop-additional-slides="5"
+        :fadeEffect="swiperOptions.fadeEffect"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+        @progress="onProgress"
+        @setTransition="onSetTransition"
+      >
+        <swiper-slide v-for="item in swiperImgList" :key="item.id">
+          <router-link :to="{ name: item.route }">
+            <div
+              class="main-img"
+              :style="{
+                background:
+                  'linear-gradient(359.69deg, rgba(0, 0, 0, 0.5) 0.28%, rgba(255, 255, 255, 0) 56.07%), linear-gradient(213.76deg, rgba(33, 43, 54, 0.5) 1.48%, rgba(255, 255, 255, 0) 20.93%), url(' +
+                  item.img +
+                  '), #FFFFFF'
+              }"
+            >
+              <div class="main-title">{{ item.title }}</div>
+              <div class="main-info">{{ item.info }}</div>
+              <div class="main-avatar">
+                <van-image width="32px" height="32px" fit="cover" round :src="item.avatar" />
+              </div>
+              <div class="main-name">{{ item.name }}</div>
+            </div>
+          </router-link>
+        </swiper-slide>
+        <div class="swiper-pagination"></div>
+      </swiper>
+      <div class="title">Popular recipes</div>
       <van-list
         v-model:loading="loading"
         :finished="finished"
@@ -104,7 +104,7 @@
         swiperOptions: any
         gourmetImgLists: any
       }
-      const data: dataType = reactive({
+      const data:dataType = reactive({
         swiperImgList,
         gourmetImgLists: [],
         list: [],
@@ -239,6 +239,9 @@
   ::v-deep(.swiper-button-next):focus {
     outline: none;
   }
+  ::v-deep(.swiper-button-prev):focus {
+    outline: none;
+  }
   ::v-deep(.swiper-pagination-bullet):focus {
     outline: none;
   }
@@ -262,6 +265,7 @@
     margin: 30px 10px 0;
     text-align: left;
     color: #ee5331;
+    font-size: 18px;
     font-weight: 700;
   }
   .list-img {
@@ -304,7 +308,8 @@
     color: #ffffff;
     font-size: 16px;
   }
-  .norem-container{
-    background: linear-gradient( #fea6a0 100px, rgba(255, 255, 255, .5));
+  .container {
+    padding-top: 30px;
+    background: linear-gradient(rgba(254, 166, 160, 0.7), rgba(255, 255, 255, 0.5) 800px);
   }
 </style>
