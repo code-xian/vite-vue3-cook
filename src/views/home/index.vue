@@ -180,7 +180,8 @@
             if (Math.abs(slideProgress) > 1) {
               modify = (Math.abs(slideProgress) - 1) * 0.3 + 1
             }
-            let translate = slideProgress * modify * 260 + 'px'
+            let translate = (slideProgress * modify * 260)/37.5 + 'rem'  //改成rem
+            // let translate = slideProgress * modify * 260 +'px'
             let scale = 1 - Math.abs(slideProgress) / 5
             let zIndex = 999 - Math.abs(Math.round(10 * slideProgress))
             slide.transform('translateX(' + translate + ') scale(' + scale + ')')
