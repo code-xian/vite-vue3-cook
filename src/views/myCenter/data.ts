@@ -2,7 +2,7 @@ import { TabsType } from './type'
 export const tabs: TabsType[] = [
   {
     tabIndex: 1,
-    tabName: '笔记'
+    tabName: '笔记',
   },
   {
     tabIndex: 2,

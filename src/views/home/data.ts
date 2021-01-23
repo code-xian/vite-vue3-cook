@@ -1,18 +1,5 @@
-interface swiperImgType {
-  img: string
-  route: string
-  id: number
-  title: string
-  info: string
-  avatar: string
-  name: string
-}
-interface gourmetImgType {
-  img: string
-  id: number
-  title: string
-}
-export const swiperImgList: swiperImgType[] = [
+import {SwiperImgType,GourmetImgType} from './type'
+export const swiperImgList: SwiperImgType[] = [
   {
     id: 1,
     img: '/@/assets/images/swiper/food1.jpg',
@@ -51,10 +38,11 @@ export const swiperImgList: swiperImgType[] = [
   }
 ]
 
-export const gourmetImgList: gourmetImgType[] = Array.from({ length: 20 }, (v, i) => {
+export const gourmetImgList: GourmetImgType[] = Array.from({ length: 20 }, (v, i) => {
   return {
     img: `/@/assets/images/gourmet/gourmet${i + 1}.png`,
     id: i + 1,
-    title: 'gourmet' + (i + 1)
+    title: 'gourmet' + (i + 1),
+    description: 'Sausage & Peppers Group'
   }
 })

@@ -18,8 +18,8 @@
             <template #icon>
               <van-image
                       round
-                      width="46px"
-                      height="46px"
+                      :width="(46/37.5)+'rem'"
+                      :height="(46/37.5)+'rem'"
                       :src="item.avatar"
               />
             </template>

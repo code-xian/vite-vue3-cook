@@ -34,7 +34,7 @@
               <div class="main-title">{{ item.title }}</div>
               <div class="main-info">{{ item.info }}</div>
               <div class="main-avatar">
-                <van-image width="32px" height="32px" fit="cover" round :src="item.avatar" />
+                <van-image :width="(32/37.5)+'rem'" :height="(32/37.5)+'rem'" fit="cover" round :src="item.avatar" />
               </div>
               <div class="main-name">{{ item.name }}</div>
             </div>
