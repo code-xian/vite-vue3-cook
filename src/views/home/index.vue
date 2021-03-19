@@ -6,7 +6,6 @@
         :space-between="50"
         Autoplay
         Pagination
-        navigation
         EffectFade
         :loop="swiperOptions.loop"
         :slidesPerView="swiperOptions.slidesPerView"

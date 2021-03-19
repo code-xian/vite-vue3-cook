@@ -17,10 +17,15 @@
       <!--      >-->
       <!--        {{ item.title }}-->
       <!--      </van-tabbar-item>-->
-      <van-tabbar-item v-for="(item, index) in tabBar.tabBar" :key="index" :to="item.to">
+      <van-tabbar-item v-for="(item, index) in tabBar" :key="index" :to="item.to">
         <span>{{ item.title }}</span>
         <template #icon="props">
-          <img :src="props.active ? item.icon.active : item.icon.inactive" :class="item.style?'fontsize':''"/>
+          <van-uploader v-show="item.upLoad">
+            <img :src="props.active ? item.icon.active : item.icon.inactive" :class="item.style?'fontsize':''"/>
+          </van-uploader>
+          <template v-show="!item.upLoad">
+            <img :src="props.active ? item.icon.active : item.icon.inactive" :class="item.style?'fontsize':''"/>
+          </template>
         </template>
       </van-tabbar-item>
     </van-tabbar>
@@ -28,7 +33,7 @@
 </template>
 
 <script lang="ts">
-  import { ref, reactive, defineComponent } from 'vue'
+  import { ref, reactive, defineComponent,toRefs } from 'vue'
   export default defineComponent({
     name: 'TabBar',
     emits: ['chang'],
@@ -64,7 +69,8 @@
               active: '/@/assets/images/layout/add2.png',
               inactive: '/@/assets/images/layout/add2.png'
             },
-            style:'fontsize'
+            style:'fontsize',
+            upLoad: true
           },
           {
             title: '消息',
@@ -93,8 +99,8 @@
         context.emit('chang', value)
       }
       return {
-        tabBar,
         active,
+        ...toRefs(tabBar),
         handleChange
       }
     }

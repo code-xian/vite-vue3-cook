@@ -130,6 +130,7 @@
     &__text{
       color: #000000;
       flex: 1.5;
+      text-align: left;
     }
   }
 </style>
