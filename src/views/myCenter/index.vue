@@ -78,7 +78,7 @@
 <style scoped lang="scss">
   .top-container {
     height: 230px;
-    background: url('/@/assets/images/mine/mineBG.png');
+    background: url('../../assets/images/mine/mineBG.png');
     background-size: cover;
     opacity: 1;
   }
