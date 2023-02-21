@@ -1,22 +1,33 @@
-export var tabBar:any[] = [
+import homeActive from '@/assets/images/layout/home-active.png'
+import homeInactive from '@/assets/images/layout/home-inactive.png'
+import exploreActive from '@/assets/images/layout/explore-active.png'
+import exploreInactive from '@/assets/images/layout/explore-inactive.png'
+import messageActive from '@/assets/images/layout/message-active.png'
+import messageInactive from '@/assets/images/layout/message-inactive.png'
+import mineActive from '@/assets/images/layout/mine-active.png'
+import mineInactive from '@/assets/images/layout/mine-inactive.png'
+import add2 from '@/assets/images/layout/add2.png'
+import { ref } from 'vue'
+import type { Ref } from 'vue'
+export const tabBar:Ref<any[]> = ref([
   {
     title: '首页',
     to: {
       name: 'Home'
     },
     icon: {
-      active: require('/@/assets/images/layout/home-active.png'),
-      inactive: require('/@/assets/images/layout/home-inactive.png')
-    }
+      active: homeActive,
+      inactive: homeInactive
+    },
   },
   {
     title: '发现',
     to: {
-      name: 'ProductList'
+      path: '/explore'
     },
     icon: {
-      active: require('/@/assets/images/layout/explore-active.png'),
-      inactive: require('/@/assets/images/layout/explore-inactive.png')
+      active: exploreActive,
+      inactive: exploreInactive
     }
   },
   {
@@ -24,16 +35,21 @@ export var tabBar:any[] = [
     to: {
       name: ''
     },
-    icon: 'apps-o'
+    icon: {
+      active: add2,
+      inactive:add2
+    },
+    style:'fontsize',
+    upLoad: true
   },
   {
     title: '消息',
     to: {
-      name: 'Cart'
+      name: 'Message'
     },
     icon: {
-      active: require('/@/assets/images/layout/message-active.png'),
-      inactive: require('/@/assets/images/layout/message-inactive.png')
+      active: messageActive,
+      inactive: messageInactive
     }
   },
   {
@@ -42,8 +58,8 @@ export var tabBar:any[] = [
       name: 'MyCenter'
     },
     icon: {
-      active: require('/@/assets/images/layout/mine-active.png'),
-      inactive: require('/@/assets/images/layout/mine-inactive.png')
+      active: mineActive,
+      inactive: mineInactive
     }
   }
-]
+])

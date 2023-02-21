@@ -1,27 +1,15 @@
+// @ts-ignore
+import { defineConfig } from 'vite'
+// @ts-ignore
+import vue from '@vitejs/plugin-vue'
 import path from 'path'
-// const path = require('path')
-module.exports = {
-  alias: {
-    // 键必须以斜线开始和结束
-    '/@/': path.resolve(__dirname, './src')
-  },
-  // 引入第三方的配置
-  optimizeDeps: {
-    include: ['lodash', 'moment', 'echarts', 'axios', 'mockjs', 'swiper/vue']
-  },
-  // 反向代理
-  proxy: {
-    // '/api': {
-    //     target: 'https://blog.csdn.net/weixin_45292658',
-    //     changeOrigin: true,
-    //     rewrite: (path: string) => path.replace(/^\/api/, '')
-    // }
-  },
-  port: 8080,
-  open: true,
-  /**
-   * 在生产中服务时的基本公共路径。
-   * @default '/'
-   */
-  base: './'
-}
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  base:'./',
+  resolve:{
+    alias: {
+      '@': path.resolve(__dirname, './src') // 路径别名
+    }
+  }
+})

@@ -31,7 +31,7 @@
             </template>
             <template #default>
               <div>{{item.time}}</div>
-              <van-badge :content="item.badge" max="99" />
+              <van-badge :content="item.badge" max="99" position="left"/>
             </template>
           </van-cell>
         </div>

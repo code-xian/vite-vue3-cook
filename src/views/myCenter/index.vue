@@ -6,7 +6,7 @@
         round
         :width="(90/37.5)+'rem'"
         :height="(90/37.5)+'rem'"
-        src="/@/assets/images/avatar/avatar4.png"
+        src="@/assets/images/avatar/avatar4.png"
       />
       <div class="name">玛丽</div>
       <div class="flex">

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createRouter, createWebHashHistory } from 'vue-router'
 // import Home from '../views/home/index.vue'
 
@@ -7,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('/@/views/layout/index.vue'),
+      component: () => import('@/views/layout/index.vue'),
       name: 'Layout',
       redirect: '/home',
       meta: {
@@ -18,22 +19,22 @@ const router = createRouter({
         {
           path: '/home',
           name: 'Home',
-          component: () => import('/@/views/home/index.vue')
+          component: () => import('@/views/home/index.vue')
         },
         {
           path: '/explore',
           name: 'Explore',
-          component: () => import('/@/views/explore/index.vue')
+          component: () => import('@/views/explore/index.vue')
         },
         {
           path: '/message',
           name: 'Message',
-          component: () => import('/@/views/message/index.vue')
+          component: () => import('@/views/message/index.vue')
         },
         {
           path: '/myCenter',
           name: 'MyCenter',
-          component: () => import('/@/views/myCenter/index.vue')
+          component: () => import('@/views/myCenter/index.vue')
         }
       ]
     }

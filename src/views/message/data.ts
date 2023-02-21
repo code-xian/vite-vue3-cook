@@ -1,7 +1,10 @@
 import moment from "moment";
-export const messageList: Type[] = Array.from({ length: 4 }, (v, i) => {
+
+
+export const messageList: { badge: number; description: string; avatar: any; time: string; title: string }[] = Array.from({ length: 4 }, (v, i) => {
     return {
-        avatar:  `/@/assets/images/avatar/avatar${i+1}.png`,
+    // @ts-ignore
+        avatar:  new URL(`../../assets/images/avatar/avatar${i+1}.png`, import.meta.url).href,
         title: titleFilter(i+1),
         description: '来找你了'+i,
         time: moment().format('yyyy-MM-DD'),

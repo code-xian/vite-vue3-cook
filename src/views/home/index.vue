@@ -76,7 +76,7 @@
 <script lang="ts">
   import { swiperImgList, gourmetImgList } from './data'
   import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade } from 'swiper'
-  import { defineComponent, reactive, toRefs } from 'vue'
+  import { defineComponent, reactive, toRefs,ref } from 'vue'
   import { Swiper, SwiperSlide } from 'swiper/vue'
   import 'swiper/swiper-bundle.css'
   import 'swiper/swiper.scss'
@@ -218,7 +218,7 @@
       const refMethods = toRefs(methods)
       return {
         ...refData,
-        ...refMethods
+        ...refMethods,
       }
     }
   })
@@ -311,5 +311,9 @@
   .container {
     padding-top: 30px;
     background: linear-gradient(rgba(254, 166, 160, 0.7), rgba(255, 255, 255, 0.5) 800px);
+  }
+  .test{
+    width: 400px;
+    height: 400px;
   }
 </style>
