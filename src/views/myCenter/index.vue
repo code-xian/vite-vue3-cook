@@ -1,12 +1,13 @@
 <template>
   <div>
     <div class="top-container" ref="backgroundRef">
+      <img src="../../assets/images/avatar/avatar4.png" alt="" style="width: 130px;">
       <van-image
         class="avatar"
         round
         :width="(90/37.5)+'rem'"
         :height="(90/37.5)+'rem'"
-        src="@/assets/images/avatar/avatar4.png"
+        src="/src/assets/images/avatar/avatar4.png"
       />
       <div class="name">玛丽</div>
       <div class="flex">
@@ -45,7 +46,7 @@
   import { tabs } from './data'
   import { defineComponent, reactive, toRefs, ref } from 'vue'
   import { gourmetImgList } from '../home/data'
-
+  import img from '@/assets/images/avatar/avatar4.png'
   export default defineComponent({
     name: 'MyCenter',
     setup() {
@@ -69,7 +70,8 @@
         ...toRefs(data),
         ...toRefs(methods),
         active,
-        backgroundRef
+        backgroundRef,
+        img
       }
     }
   })
