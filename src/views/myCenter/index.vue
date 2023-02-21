@@ -1,13 +1,12 @@
 <template>
   <div>
     <div class="top-container" ref="backgroundRef">
-      <img src="../../assets/images/avatar/avatar4.png" alt="" style="width: 130px;">
       <van-image
         class="avatar"
         round
         :width="(90/37.5)+'rem'"
         :height="(90/37.5)+'rem'"
-        src="/src/assets/images/avatar/avatar4.png"
+        :src="img"
       />
       <div class="name">玛丽</div>
       <div class="flex">
